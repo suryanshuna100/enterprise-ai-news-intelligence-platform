@@ -43,3 +43,41 @@ Next milestone:
 - Data ingestion architecture
 - Technology evaluation for Python and AWS S3
 - Initial ingestion implementation
+
+## [v0.3.0] - Python Ingestion
+
+### Added
+
+#### Architecture
+
+- Designed the Data Ingestion Layer.
+- Documented ingestion principles.
+- Defined batch vs streaming ingestion strategy.
+- Documented pull-based ingestion architecture.
+- Introduced idempotency, retry, logging, metadata, and failure recovery concepts.
+
+#### Architecture Decisions
+
+- Completed ADR-002: Why Python?
+- Selected Python as the ingestion language.
+
+#### Platform
+
+- Created the platform source code structure.
+- Added the ingestion module.
+- Created the initial GDELT extraction service skeleton.
+
+### Changed
+
+- Extended the platform from architecture into implementation.
+- Established the foundation for future ingestion development.
+
+### Status
+
+🚧 Python ingestion foundation completed.
+
+Next milestone:
+
+- Download GDELT datasets.
+- Validate incoming files.
+- Store raw data in the Bronze layer.   
