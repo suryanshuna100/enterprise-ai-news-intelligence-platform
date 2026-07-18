@@ -20,7 +20,6 @@ Build a scalable enterprise data platform that transforms raw global event data 
 
 ---
 
-## Current Release
 
 **Version:** v0.1.0
 
@@ -61,8 +60,6 @@ Upcoming:
 | v2 AI Enablement | ⏳ Planned |
 | v3 Enterprise AI Platform | ⏳ Planned |
 
-
-## Current Release
 
 **Version:** v0.2.0
 
@@ -118,11 +115,44 @@ Upcoming:
 
 ## Current Release
 
-**v0.3.0 – Python Ingestion**
+**Version:** v0.3.0
+
+**Release Name:** Reliable Data Acquisition
 
 **Status:** 🟢 In Progress
 
-This release introduces the architecture and foundation of the Data Ingestion Layer. The platform now includes the first implementation module responsible for ingesting external data into the enterprise data platform.
+This release establishes the first production-grade implementation of the Enterprise Data Ingestion Layer.
+
+The platform now includes:
+
+- Modular ingestion architecture
+- Centralized configuration management
+- GDELT dataset discovery
+- Reliable HTTP download service
+- Structured logging
+- Production-ready project organization
+
+The ingestion layer is designed using engineering best practices including separation of concerns, configurable execution, fail-fast validation, and reusable service components.
+
+## Current Capabilities
+
+The ingestion module currently supports:
+
+- Retrieval of the latest available GDELT dataset
+- Reliable HTTP communication using configurable request parameters
+- Custom User-Agent identification
+- Timeout management
+- HTTP error handling using fail-fast principles
+- Binary dataset download
+- Modular and reusable ingestion services
+
+Future releases will extend the ingestion layer with:
+
+- File validation
+- Bronze layer storage
+- Metadata generation
+- Retry policies
+- Airflow scheduling
 
 ## Project Status
 
@@ -130,7 +160,7 @@ This release introduces the architecture and foundation of the Data Ingestion La
 |--------|--------|
 | Platform Foundation | ✅ Completed |
 | Business Architecture | ✅ Completed |
-| Python Ingestion | 🚧 In Progress |
+| Data Ingestion Engineering | 🚧 In Progress |
 | Airflow Orchestration | ⏳ Planned |
 | Enterprise Lakehouse | ⏳ Planned |
 | AI Enablement | ⏳ Planned |

@@ -1,6 +1,6 @@
 # Data Ingestion
 
-**Document Status:** 🟡 Architecture Design
+**Document Status:** 🟠 Engineering Design
 
 ---
 
@@ -10,6 +10,19 @@ The Data Ingestion Layer is responsible for reliably acquiring data from externa
 
 Its primary objective is to ensure that raw data is collected accurately, consistently, and in a repeatable manner.
 
+## Current Implementation
+
+The first engineering implementation of the Data Ingestion Layer has been completed.
+
+The platform currently provides:
+
+- Discovery of the latest GDELT dataset
+- Reliable HTTP download service
+- Centralized configuration management
+- Structured logging
+- HTTP error validation
+
+Additional engineering capabilities will be introduced incrementally throughout subsequent releases.
 ---
 
 ## Business Problem
@@ -33,6 +46,9 @@ The ingestion layer will be designed according to the following principles:
 - Enable future scalability and automation.
 - Maintain reliability and fault tolerance.
 
+### Current Implementation Notes
+
+The current implementation follows these principles by separating dataset discovery from dataset download. Configuration values such as HTTP timeout and User-Agent are externalized to simplify maintenance and support future deployment environments.
 ---
 
 ## Batch vs Streaming
@@ -51,6 +67,9 @@ Rather than receiving data pushed from external systems, the platform will perio
 
 This approach provides greater control over scheduling, retry mechanisms, and operational monitoring.
 
+### Implementation Notes
+
+The current implementation retrieves the latest available dataset by querying GDELT's `lastupdate.txt` endpoint before downloading the corresponding archive.
 ---
 
 ## Idempotency
@@ -71,6 +90,9 @@ Retry mechanisms will be introduced to improve reliability and minimize manual i
 
 Detailed retry policies will be defined during implementation.
 
+### Implementation Notes
+
+Retry logic has not yet been implemented. The current implementation follows a fail-fast approach by immediately surfacing HTTP errors. Configurable retry policies will be introduced in a future release.
 ---
 
 ## Logging Strategy
@@ -81,6 +103,9 @@ These logs will support monitoring, debugging, auditing, and operational trouble
 
 The logging implementation will be introduced in a later release.
 
+The current implementation uses Python's standard logging framework to record ingestion events.
+
+Future releases will integrate centralized log aggregation through orchestration and cloud monitoring services.
 ---
 
 ## Metadata Strategy
@@ -91,6 +116,9 @@ Examples include ingestion timestamps, source information, execution identifiers
 
 The complete metadata model will be finalized during implementation.
 
+### Implementation Notes
+
+Metadata generation is planned but not yet implemented. Future releases will capture ingestion timestamps, dataset identifiers, execution metadata, and processing statistics.
 ---
 
 ## Failure Recovery
@@ -101,15 +129,18 @@ Recovery mechanisms should enable interrupted ingestion jobs to resume safely wh
 
 Detailed recovery procedures will be documented after the ingestion pipeline has been implemented.
 
+### Implementation Notes
+
+Recovery mechanisms have not yet been implemented. Current execution relies on fail-fast validation to prevent invalid downstream processing.
 ---
 
 ## Open Decisions
 
 The following implementation decisions will be finalized in future releases:
 
-- Programming language for ingestion
-- Cloud storage selection
-- Scheduling mechanism
-- Retry implementation
+- AWS S3 persistence strategy
 - Metadata schema
-- Logging framework
+- Retry policy
+- Airflow scheduling
+- Checkpoint management
+- Operational monitoring integration

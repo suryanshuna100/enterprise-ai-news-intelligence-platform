@@ -44,40 +44,59 @@ Next milestone:
 - Technology evaluation for Python and AWS S3
 - Initial ingestion implementation
 
-## [v0.3.0] - Python Ingestion
+## [v0.3.0] - Reliable Data Acquisition
 
 ### Added
 
-#### Architecture
+#### Engineering
 
-- Designed the Data Ingestion Layer.
-- Documented ingestion principles.
-- Defined batch vs streaming ingestion strategy.
-- Documented pull-based ingestion architecture.
-- Introduced idempotency, retry, logging, metadata, and failure recovery concepts.
-
-#### Architecture Decisions
-
-- Completed ADR-002: Why Python?
-- Selected Python as the ingestion language.
+- Designed the engineering architecture for the Data Ingestion Layer.
+- Introduced centralized configuration management.
+- Implemented configurable HTTP request settings.
+- Added reusable download service.
+- Implemented latest GDELT dataset discovery.
+- Added structured logging support.
+- Introduced fail-fast HTTP validation using `raise_for_status()`.
+- Implemented production-ready module separation.
 
 #### Platform
 
-- Created the platform source code structure.
-- Added the ingestion module.
-- Created the initial GDELT extraction service skeleton.
+- Created `platform/ingestion/config.py`.
+- Implemented `extract_gdelt.py`.
+- Added dataset URL discovery service.
+- Added dataset download service.
+- Introduced reusable ingestion components.
+
+#### Engineering Principles
+
+- Applied Single Responsibility Principle.
+- Separated discovery, download, validation, and storage responsibilities.
+- Adopted configuration-driven development.
+- Established reusable service architecture.
 
 ### Changed
 
-- Extended the platform from architecture into implementation.
-- Established the foundation for future ingestion development.
+- Transitioned from architecture-only documentation to executable ingestion services.
+- Improved platform modularity.
+- Enhanced reliability through centralized configuration.
+- Standardized HTTP communication across ingestion modules.
 
 ### Status
 
-🚧 Python ingestion foundation completed.
+🚧 Reliable Data Acquisition is in progress.
+
+Completed:
+
+- Configuration management
+- Dataset discovery
+- Dataset download
+- HTTP validation
+- Logging foundation
 
 Next milestone:
 
-- Download GDELT datasets.
-- Validate incoming files.
-- Store raw data in the Bronze layer.   
+- File validation
+- Bronze layer persistence
+- Metadata generation
+- Retry implementation
+- Checkpoint management
