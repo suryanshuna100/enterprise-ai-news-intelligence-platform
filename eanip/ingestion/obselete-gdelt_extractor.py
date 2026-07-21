@@ -10,7 +10,7 @@ Purpose:
 Status:
     Day 3 - GDELT Dataset Extraction
 """
-
+'''
 import logging
 from pathlib import Path
 
@@ -199,3 +199,4 @@ if __name__ == "__main__":
     )
 
     main()
+'''

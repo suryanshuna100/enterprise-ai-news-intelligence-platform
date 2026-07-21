@@ -119,7 +119,7 @@ Upcoming:
 
 **Release Name:** Reliable Data Acquisition
 
-**Status:** 🟢 In Progress
+**Status:** Status: ✅ Completed
 
 This release establishes the first production-grade implementation of the Enterprise Data Ingestion Layer.
 
@@ -136,23 +136,30 @@ The ingestion layer is designed using engineering best practices including separ
 
 ## Current Capabilities
 
-The ingestion module currently supports:
+The ingestion module now supports:
 
-- Retrieval of the latest available GDELT dataset
-- Reliable HTTP communication using configurable request parameters
-- Custom User-Agent identification
-- Timeout management
-- HTTP error handling using fail-fast principles
-- Binary dataset download
-- Modular and reusable ingestion services
+- Latest GDELT dataset discovery
+- Streaming HTTP download
+- Direct streaming upload to Amazon S3
+- Partitioned Bronze storage
+- Metadata generation
+- Immutable raw data storage
+- Structured logging
+- Centralized configuration
+- Fail-fast HTTP validation
+- Production-ready project organization
 
 Future releases will extend the ingestion layer with:
 
-- File validation
-- Bronze layer storage
-- Metadata generation
 - Retry policies
 - Airflow scheduling
+
+## Bronze Layer Architecture
+
+The ingestion service streams raw GDELT datasets directly into Amazon S3 without using permanent local storage.
+
+Each ingestion creates a partitioned Bronze layout:
+This design preserves immutable source data while enabling replay, auditing, and downstream Spark processing.
 
 ## Project Status
 
@@ -165,3 +172,4 @@ Future releases will extend the ingestion layer with:
 | Enterprise Lakehouse | ⏳ Planned |
 | AI Enablement | ⏳ Planned |
 | Enterprise AI Platform | ⏳ Planned |
+

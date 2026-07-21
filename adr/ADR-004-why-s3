@@ -1,0 +1,261 @@
+# ADR-004: Why Amazon S3 for the Bronze Layer?
+
+## Status
+
+Accepted
+
+---
+
+## Date
+
+19 July 2026
+
+---
+
+## Context
+
+The Enterprise AI News Intelligence Platform (EANIP) continuously ingests raw event datasets from GDELT.
+
+These datasets represent the source of truth for the entire analytics and AI platform and must be streamed directly into the Bronze Layer before any transformation occurs.
+
+The storage layer must:
+
+- Store raw datasets without modification.
+- Support streaming ingestion from external HTTP sources.
+- Scale to large volumes of historical data.
+- Support replay and reprocessing.
+- Integrate with Apache Spark.
+- Integrate with Apache Airflow.
+- Integrate with AWS services.
+- Support future Delta Lake implementation.
+- Provide high durability and availability.
+- Remain cost-effective for long-term storage.
+
+A storage solution was required to implement the Bronze Layer of the Medallion Architecture while supporting a modern cloud-native ingestion pipeline.
+
+---
+
+## Decision
+
+Amazon S3 has been selected as the storage technology for the Bronze Layer.
+
+The ingestion service streams datasets directly into Amazon S3 while preserving the original upstream filename and storing ingestion metadata alongside each uploaded object.
+
+- Original source filenames are preserved for improved lineage and traceability.
+- Partitioned object keys simplify Spark ingestion and historical replay.
+
+Amazon S3 provides highly durable, scalable, and cost-effective object storage that integrates seamlessly with Apache Spark, AWS services, Databricks, and Snowflake. This cloud-native architecture eliminates unnecessary disk I/O, simplifies infrastructure, and establishes Amazon S3 as the immutable system of record for the enterprise data lake.
+
+---
+
+## Decision Drivers
+
+The decision was based on the following criteria:
+
+- High durability
+- Virtually unlimited scalability
+- Cost-effective storage
+- Native Spark integration
+- Native AWS ecosystem integration
+- Cloud-native object storage
+- Native support for streaming ingestion
+- Support for partitioned datasets
+- Strong IAM-based security
+- Industry-standard Data Lake architecture
+
+---
+
+## Alternatives Considered
+
+### Amazon S3 ✅ (Selected)
+
+**Pros**
+
+- Extremely durable object storage
+- Virtually unlimited scalability
+- Low storage cost
+- Native integration with Spark
+- Native integration with Airflow
+- Native integration with AWS services
+- Excellent support for Data Lake architectures
+- Fine-grained IAM security
+- Supports partitioned data layouts
+- Eliminates the need for permanent local storage during ingestion
+
+**Cons**
+
+- Higher access latency than local disks
+- Requires network connectivity
+- Object storage semantics differ from traditional file systems
+
+---
+
+### Local Staging + Amazon S3
+
+**Pros**
+
+- Easy to debug
+- Allows validation before upload
+- Simple development workflow
+- Useful during local experimentation
+
+**Cons**
+
+- Additional disk I/O
+- Increased ingestion latency
+- Requires local storage
+- More infrastructure dependencies
+- Less cloud-native
+
+This approach was considered during the initial design phase but rejected in favor of direct streaming into Amazon S3.
+
+---
+
+### Local File System
+
+**Pros**
+
+- Simple to use
+- No cloud cost
+- Fast local development
+
+**Cons**
+
+- Not scalable
+- No centralized storage
+- Difficult collaboration
+- No disaster recovery
+- Unsuitable for production workloads
+
+---
+
+### Amazon EBS
+
+**Pros**
+
+- Low latency
+- High IOPS
+- Suitable for databases
+- Persistent block storage
+
+**Cons**
+
+- Attached to a single EC2 instance
+- Limited scalability
+- Not designed for enterprise data lakes
+- More expensive for long-term raw storage
+
+---
+
+### Amazon EFS
+
+**Pros**
+
+- Shared network file system
+- Multiple EC2 instances can access data
+
+**Cons**
+
+- Higher cost
+- File system abstraction not required
+- Less common for Data Lake storage
+- Lower scalability compared to S3
+
+---
+
+### Azure Data Lake Storage
+
+**Pros**
+
+- Enterprise-grade object storage
+- Strong analytics integration
+- Similar capabilities to Amazon S3
+
+**Cons**
+
+- Outside the selected AWS ecosystem
+- Additional operational complexity
+- Inconsistent with the project's cloud strategy
+
+---
+
+## Trade-offs
+
+### Benefits
+
+- Highly durable storage
+- Virtually unlimited scalability
+- Low operational overhead
+- Cost-efficient long-term storage
+- Native integration with Spark and AWS services
+- Cloud-native streaming architecture
+- Eliminates permanent local staging
+- Supports immutable raw datasets
+- Industry-standard Data Lake implementation
+
+---
+
+### Drawbacks
+
+- Network dependency
+- Object storage semantics differ from local file systems
+- Requires IAM configuration and credential management
+- Streaming uploads require robust retry and error handling
+
+---
+
+## Consequences
+
+### Positive
+
+- Establishes the foundation of the enterprise data lake
+- Enables Bronze → Silver → Gold architecture
+- Simplifies future Spark processing
+- Supports replay and historical analysis
+- Provides centralized storage for downstream systems
+- Simplifies deployment on EC2, ECS, Kubernetes, and serverless platforms
+- Aligns with modern cloud-native Data Engineering practices
+
+---
+
+### Negative
+
+- Introduces AWS dependency
+- Requires cloud resource management
+- Additional learning curve for IAM and S3 concepts
+- Failed uploads require retry mechanisms because no permanent local copy exists
+
+---
+
+## Decision Risks
+
+Potential risks associated with this decision include:
+
+- Network interruptions during streaming uploads
+- Misconfigured IAM policies preventing data ingestion
+- Accidental overwriting if object keys are not uniquely generated
+- Increased implementation complexity for historical backfills
+- Additional retry logic required for resilient streaming ingestion
+
+These risks can be mitigated through proper IAM policies, unique partitioning strategies, retry mechanisms, monitoring, and metadata-driven ingestion.
+
+---
+
+## Future Reconsiderations
+
+This decision may be revisited if:
+
+- Multi-cloud support becomes a business requirement.
+- On-premise object storage is adopted.
+- Regulatory requirements mandate an alternative storage platform.
+- A hybrid cloud architecture becomes necessary.
+
+At present, Amazon S3 provides the best balance of scalability, durability, ecosystem integration, cloud-native architecture, and cost for implementing the Bronze Layer.
+
+---
+
+## Interview Perspective
+
+**Question: Why did you choose direct streaming into Amazon S3 instead of downloading files locally first?**
+
+Streaming directly into Amazon S3 establishes the Bronze Layer as the system of record while eliminating unnecessary local disk writes. This reduces infrastructure complexity, lowers storage requirements, and makes the ingestion service easier to deploy on cloud compute platforms such as EC2, ECS, Kubernetes, or AWS Lambda. Metadata is generated alongside the uploaded object, while Spark and downstream processing layers consume immutable datasets directly from Amazon S3. This architecture is commonly used in modern cloud-native data platforms because it is scalable, cost-effective, and operationally simpler than maintaining permanent local staging.

@@ -1,3 +1,4 @@
+
 from pathlib import Path
 
 # ==========================================================
@@ -12,9 +13,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 GDELT_BASE_URL = "http://data.gdeltproject.org/gdeltv2"
 
-LAST_UPDATE_URL = f"{GDELT_BASE_URL}/lastupdate.txt"
+LAST_UPDATE_FILE = "lastupdate.txt"
 
-MASTER_FILE_LIST_URL = f"{GDELT_BASE_URL}/masterfilelist.txt"
+MASTER_FILE_LIST = "masterfilelist.txt"
 
 # ==========================================================
 # Local Storage
@@ -37,3 +38,32 @@ USER_AGENT = "EnterpriseAINewsIntelligencePlatform/0.3.0"
 LOG_LEVEL = "INFO"
 
 LOG_DIRECTORY = PROJECT_ROOT / "logs"
+
+
+'''Things that belong in config.py:
+
+✅ Base URLs
+✅ Timeouts
+✅ Retry counts
+✅ AWS bucket names
+✅ Region
+✅ User agent
+✅ API endpoints
+'''
+AWS_REGION = "ap-south-1"
+
+S3_BUCKET_NAME = "eanip-bronze-2026-ss"
+
+BRONZE_PREFIX = "bronze"
+
+GDELT_PREFIX = "gdelt"
+
+MAX_RETRIES = 3
+
+RETRY_BACKOFF = 2
+
+METADATA_FILENAME = "metadata.json"
+
+LOG_FORMAT = (
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)

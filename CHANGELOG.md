@@ -100,3 +100,66 @@ Next milestone:
 - Metadata generation
 - Retry implementation
 - Checkpoint management
+
+## [v0.4.0] - AWS S3 Bronze Layer
+
+### Added
+
+#### Engineering
+
+- Designed the engineering architecture for the Bronze Layer.
+- Implemented direct streaming ingestion from GDELT into Amazon S3.
+- Introduced partitioned Bronze storage using ingestion date and ingestion time.
+- Added metadata generation for each ingested dataset.
+- Implemented incremental ingestion using the latest GDELT dataset feed.
+- Preserved original GDELT source filenames during upload.
+- Standardized UTC-based ingestion timestamps.
+- Added centralized Amazon S3 upload services for datasets and metadata.
+
+#### Platform
+
+- Created the Amazon S3 Bronze bucket.
+- Implemented reusable stream upload service.
+- Implemented reusable metadata upload service.
+- Added partition-based storage layout.
+- Added metadata generation module.
+- Established immutable raw dataset storage.
+- Implemented end-to-end Bronze ingestion workflow.
+
+#### Engineering Principles
+
+- Applied cloud-native streaming architecture.
+- Eliminated permanent local staging during ingestion.
+- Preserved immutable raw datasets for replay and auditing.
+- Separated orchestration, ingestion, metadata, and storage responsibilities.
+- Established partitioned storage for scalable downstream processing.
+
+### Changed
+
+- Transitioned from local ingestion services to cloud-based Bronze storage.
+- Replaced generic dataset names with original GDELT source filenames.
+- Updated ingestion workflow to generate metadata after successful dataset upload.
+- Improved storage organization using partition-based object keys.
+- Standardized the Bronze Layer for future Spark and Delta Lake processing.
+
+### Status
+
+✅ AWS S3 Bronze Layer is completed.
+
+Completed:
+
+- Amazon S3 Bronze storage
+- Streaming ingestion
+- Partitioned storage
+- Metadata generation
+- Incremental ingestion
+- End-to-end Bronze workflow
+
+Next milestone:
+
+- Docker containerization
+- Apache Airflow
+- DAG development
+- Workflow scheduling
+- Retry orchestration
+- Sensor implementation
