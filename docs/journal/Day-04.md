@@ -1,6 +1,6 @@
 # Day 4 — Reliable Data Acquisition
 
-**Date:** _(Update the date)_
+**Date:** 18.07.2026
 
 **Release:** v0.3.0
 

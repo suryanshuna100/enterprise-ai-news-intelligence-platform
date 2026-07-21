@@ -1,6 +1,6 @@
 # Day 5 — AWS S3 Bronze Layer
 
-**Date:** _(Update the date)_
+**Date:** 20.07.2027
 
 **Release:** v0.4.0
 
