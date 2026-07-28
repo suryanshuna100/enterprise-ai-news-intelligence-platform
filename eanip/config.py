@@ -67,3 +67,34 @@ METADATA_FILENAME = "metadata.json"
 LOG_FORMAT = (
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
+
+# ==========================================================
+# Bronze Layer
+# ==========================================================
+
+BRONZE_PATH = (
+    f"s3a://{S3_BUCKET_NAME}/{BRONZE_PREFIX}/{GDELT_PREFIX}/"
+)
+# ==========================================================
+# Silver Layer
+# ==========================================================
+
+SILVER_PREFIX = "silver"
+
+SILVER_PATH = (
+    f"s3a://{S3_BUCKET_NAME}/{SILVER_PREFIX}/{GDELT_PREFIX}/events/"
+)
+
+# Supported:
+# parquet
+# delta
+
+SILVER_FILE_FORMAT = "parquet"
+
+# Supported:
+# overwrite
+# append
+# error
+# ignore
+
+SILVER_WRITE_MODE = "overwrite"
