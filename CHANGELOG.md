@@ -157,9 +157,9 @@ Completed:
 
 Next milestone:
 
-- Docker containerization
-- Apache Airflow
-- DAG development
-- Workflow scheduling
-- Retry orchestration
-- Sensor implementation
+- Apache Spark processing engine
+- Bronze → Silver transformation pipeline
+- Distributed data processing
+- Schema validation
+- Partitioned Parquet storage
+- Silver Layer architecture
